@@ -16,5 +16,15 @@ pipeline {
         sh 'ant -Dlibs.CopyLibs.classpath=./web/librerias/org-netbeans-modules-java-j2seproject-copylibstask.jar clean compile test dist'
       }
     }
+	
+	stage('Build docker image') {
+      steps {
+        node {
+			sshagent (credentials: ['jenkins']) {
+				sh 'ssh -o StrictHostKeyChecking=no root@192.168.0.6 uname -a'
+			}
+		}
+      }
+    }
   }
 }
