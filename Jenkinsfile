@@ -19,8 +19,8 @@ pipeline {
 	
 	stage('Build docker image') {
       steps {
-		sshagent (credentials: ['ROOT']) {
-			sh 'ssh -o StrictHostKeyChecking=no root@192.168.0.6 uname -a'
+		sshagent (credentials: ['tagost']) {
+			sh 'ssh -o StrictHostKeyChecking=no root@192.168.0.5 uname -a'
 		}
       }
     }
