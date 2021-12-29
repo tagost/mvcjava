@@ -1,11 +1,12 @@
 pipeline {
-  agent {docker {image 'cameronmcnz/ant-jdk8-git'}}
+  agent any
+  tools {
+      ant 'ant'
+  }
   stages {
-    stage('Log Ant,Git and Java version info') {
+    stage('Log Ant version info') {
       steps {
         sh 'ant -version'
-        sh 'java -version'
-        sh 'git --version'
       }
     }
     stage('GitHub Jenkins Ant Build') {
