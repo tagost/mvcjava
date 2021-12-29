@@ -20,7 +20,8 @@ pipeline {
 	stage('Build docker image') {
       steps {
 		sshagent (credentials: ['k3s-server']) {
-			sh 'ssh -o StrictHostKeyChecking=no root@192.168.0.5 uname -a'
+			sh 'ssh -o StrictHostKeyChecking=no root@192.168.0.5 uname -a \
+			docker --version'
 		}
       }
     }
