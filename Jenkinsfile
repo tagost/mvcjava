@@ -13,7 +13,7 @@ pipeline {
       steps {
         echo 'hola'
         //git 'https://github.com/tagost/mvcjava.git'
-        sh 'ant -Dlibs.CopyLibs.classpath=web/librerias/* clean compile test package war'
+        sh 'ant -Dlibs.CopyLibs.classpath=librerias/ clean compile test package war'
       }
     }
   }
