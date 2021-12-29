@@ -11,6 +11,7 @@ pipeline {
     }
     stage('GitHub Jenkins Ant Build') {
       steps {
+        echo 'hola'
         git 'https://github.com/tagost/mvcjava.git'
         sh 'ant clean compile test package war'
       }
