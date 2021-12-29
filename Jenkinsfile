@@ -19,7 +19,7 @@ pipeline {
 	
 	stage('Build docker image') {
       steps {
-		sshagent (credentialsId: ['jenkins']) {
+		sshagent (credentials: ['ROOT']) {
 			sh 'ssh -o StrictHostKeyChecking=no root@192.168.0.6 uname -a'
 		}
       }
