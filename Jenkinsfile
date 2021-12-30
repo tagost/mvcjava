@@ -40,11 +40,11 @@ node {
 			sshPut remote: remote, from: 'dist/mvcjava.war', into: 'mvcjava', override: true
 			sshCommand remote: remote, command: 'cd mvcjava && docker build -t tagost/mvcjava .'
 		}
-		stage ('Docker push'){
+		/*stage ('Docker push'){
 			sshCommand remote: remote, command: 'docker push tagost/mvcjava'
-		}
+		}*/
 		stage ('Deploy aplication'){
-			sshCommand remote: remote, command: 'docker rmi tagost/mvcjava'
+			sshCommand remote: remote, command: 'docker rm -fv mvcjava'
 			sshCommand remote: remote, command: 'cd mvcjava && docker-compose up -d'
 		}
 	}
