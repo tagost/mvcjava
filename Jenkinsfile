@@ -1,3 +1,8 @@
+def remote = [:]
+remote.name = "k3s"
+remote.host = "192.168.0.5"
+remote.allowAnyHosts = true
+
 pipeline {
   agent any
   tools {
@@ -16,10 +21,6 @@ pipeline {
         sh 'ant -Dlibs.CopyLibs.classpath=./web/librerias/org-netbeans-modules-java-j2seproject-copylibstask.jar clean compile test dist'
       }
     }
-	def remote = [:]
-	remote.name = "k3s"
-	remote.host = "192.168.0.5"
-	remote.allowAnyHosts = true
 	stage('Build docker image') {
 		steps {
 			withCredentials([sshUserPrivateKey(credentialsId: 'k3s-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
