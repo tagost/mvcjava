@@ -32,17 +32,16 @@ remote.name = "k3s"
 remote.host = "192.168.0.5"
 remote.allowAnyHosts = true
 node {
-	stage('Build docker image') {
-		
-			withCredentials([sshUserPrivateKey(credentialsId: 'k3s-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-				
-				remote.user = userName
-				remote.identityFile = identity
-				stage("Build Docker Image!") {
-					sshCommand remote: remote, command: 'for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done'
-					sshPut remote: remote, from: 'dist/mvcjava.war', into: 'mvcjava', override: true
-					sshCommand remote: remote, command: 'cd mvcjava && docker build -t tagost/mvcjava .'
-				}
-			}
+	withCredentials([sshUserPrivateKey(credentialsId: 'k3s-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+		remote.user = userName
+		remote.identityFile = identity
+		stage('Build docker image') {
+			sshCommand remote: remote, command: 'for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done'
+			sshPut remote: remote, from: 'dist/mvcjava.war', into: 'mvcjava', override: true
+			sshCommand remote: remote, command: 'cd mvcjava && docker build -t tagost/mvcjava .'
+		}
+		stage ('Docker push'){
+			sshCommand remote: remote, command: 'docker push tagost/mvcjava'
+		}
 	}
 }
