@@ -10,7 +10,6 @@ node {
         echo 'hola'
         //git 'https://github.com/tagost/mvcjava.git'
         sh 'ant -Dlibs.CopyLibs.classpath=./web/librerias/org-netbeans-modules-java-j2seproject-copylibstask.jar clean compile test dist'
-      }
     }
 	stage('Show docker version') {
 			sshagent (credentials: ['k3s-server']) {
@@ -34,4 +33,4 @@ node {
 				}
 			}
 	}
-  }
+}
