@@ -1,10 +1,8 @@
-
-pipeline {
-  agent any
-  tools {
-      ant 'ant'
-  }
-  node {
+def remote = [:]
+remote.name = "k3s"
+remote.host = "192.168.0.5"
+remote.allowAnyHosts = true
+node {
     stage('Log Ant version info') {
       steps {
         sh 'ant -version'
