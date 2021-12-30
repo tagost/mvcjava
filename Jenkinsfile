@@ -3,8 +3,10 @@ remote.name = "k3s"
 remote.host = "192.168.0.5"
 remote.allowAnyHosts = true
 node {
-	tool name: 'ant', type: 'ant'
     stage('Log Ant version info') {
+		tools {
+			ant 'ant' 
+		}
         sh 'ant -version'
     }
     stage('GitHub Jenkins Ant Build') {
