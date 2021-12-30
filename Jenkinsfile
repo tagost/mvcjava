@@ -4,6 +4,11 @@ pipeline {
   tools {
       ant 'ant'
   }
+  node {
+  def remote = [:]
+  remote.name = "k3s"
+  remote.host = "192.168.0.5"
+  remote.allowAnyHosts = true
   stages {
     stage('Log Ant version info') {
       steps {
@@ -27,12 +32,8 @@ pipeline {
 	}
 	stage('Build docker image') {
 		steps {
-			node {
 			withCredentials([sshUserPrivateKey(credentialsId: 'k3s-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-				def remote = [:]
-				remote.name = "k3s"
-				remote.host = "192.168.0.5"
-				remote.allowAnyHosts = true
+				
 				remote.user = userName
 				remote.identityFile = identity
 				stage("SSH Steps Rocks!") {
@@ -44,8 +45,8 @@ pipeline {
 					sshRemove remote: remote, path: 'abc.sh'
 				}
 			}
-			}
 		}
 	}
+  }
   }
 } 
