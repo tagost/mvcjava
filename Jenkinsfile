@@ -40,8 +40,8 @@ node {
 				remote.identityFile = identity
 				stage("Build Docker Image!") {
 					sshCommand remote: remote, command: 'for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done'
-					sshPut remote: remote, from: 'dis/mvcjava.war', into: '.'
+					sshPut remote: remote, from: 'dist/mvcjava.war', into: '.'
 				}
 			}
 	}
-	}
+}
