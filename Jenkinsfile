@@ -17,11 +17,6 @@ pipeline {
         sh 'ant -Dlibs.CopyLibs.classpath=./web/librerias/org-netbeans-modules-java-j2seproject-copylibstask.jar clean compile test dist'
       }
     }
-	def remote = [:]
-	remote.name = "k3s-server"
-	remote.host = "192.168.0.5"
-	remote.allowAnyHosts = true
-
 	node {
 		withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
 			remote.user = userName
@@ -44,3 +39,4 @@ pipeline {
 		}
     }
  }
+		
