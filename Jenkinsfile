@@ -25,9 +25,9 @@ pipeline {
 			}
 		}
 	}
-	node{
 	stage('Build docker image') {
 		steps {
+			node {
 			withCredentials([sshUserPrivateKey(credentialsId: 'k3s-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
 				def remote = [:]
 				remote.name = "k3s"
@@ -43,9 +43,9 @@ pipeline {
 					sshScript remote: remote, script: 'abc.sh'
 					sshRemove remote: remote, path: 'abc.sh'
 				}
-			}	
+			}
+			}
 		}
-	}
 	}
   }
 } 
