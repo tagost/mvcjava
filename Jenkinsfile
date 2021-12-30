@@ -25,6 +25,7 @@ pipeline {
 			}
 		}
 	}
+	node{
 	stage('Build docker image') {
 		steps {
 			withCredentials([sshUserPrivateKey(credentialsId: 'k3s-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
@@ -44,6 +45,7 @@ pipeline {
 				}
 			}	
 		}
+	}
 	}
   }
 } 
