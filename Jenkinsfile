@@ -2,8 +2,8 @@ def remote = [:]
 remote.name = "k3s"
 remote.host = "192.168.0.5"
 remote.allowAnyHosts = true
-tool name: 'ant', type: 'ant'
 node {
+	tool name: 'ant', type: 'ant'
     stage('Log Ant version info') {
         sh 'ant -version'
     }
