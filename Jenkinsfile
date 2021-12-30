@@ -5,11 +5,6 @@ pipeline {
       ant 'ant'
   }
   node {
-  def remote = [:]
-  remote.name = "k3s"
-  remote.host = "192.168.0.5"
-  remote.allowAnyHosts = true
-  stages {
     stage('Log Ant version info') {
       steps {
         sh 'ant -version'
@@ -47,6 +42,5 @@ pipeline {
 			}
 		}
 	}
-  }
   }
 } 
