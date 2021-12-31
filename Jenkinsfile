@@ -4,11 +4,11 @@ pipeline {
 			ant 'ant' 
 	}
     stages {
-        stage('Log Ant version Info') { 
-            steps {
-				sh 'ant -version'
-            }
-        }
+        // stage('Log Ant version Info') { 
+            // steps {
+				// sh 'ant -version'
+            // }
+        // }
         stage('GitHub Jenkins Ant Build') { 
             steps {
 				echo 'hola'
@@ -16,14 +16,14 @@ pipeline {
 				sh 'ant -Dlibs.CopyLibs.classpath=./web/librerias/org-netbeans-modules-java-j2seproject-copylibstask.jar clean compile test dist'
             }
         }
-        stage('Log Docker Version') { 
-            steps {
-				sshagent (credentials: ['k3s-server']) {
-					sh 'ssh -o StrictHostKeyChecking=no root@192.168.0.5 uname -a'
-					sh 'docker --version'
-				}
-            }
-        }
+        // stage('Log Docker Version') { 
+            // steps {
+				// sshagent (credentials: ['k3s-server']) {
+					// sh 'ssh -o StrictHostKeyChecking=no root@192.168.0.5 uname -a'
+					// sh 'docker --version'
+				// }
+            // }
+        // }
     }
 }
 
