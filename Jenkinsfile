@@ -38,7 +38,7 @@ node {
 		stage('Build docker image') {
 			sshCommand remote: remote, command: 'mkdir -p mvcjava'
 			sshPut remote: remote, from: '.', into: 'mvcjava/env.WORKSPACE', override: true
-			sshCommand remote: remote, command: 'cd mvcjava/$env.WORKSPACE && docker build -t tagost/mvcjava .'
+			sshCommand remote: remote, command: 'cd mvcjava/env.WORKSPACE && docker build -t tagost/mvcjava .'
 		}
 		/*stage ('Docker push'){
 			sshCommand remote: remote, command: 'docker push tagost/mvcjava'
