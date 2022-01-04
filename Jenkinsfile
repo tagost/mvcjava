@@ -35,7 +35,7 @@ node {
 	withCredentials([sshUserPrivateKey(credentialsId: 'k3s-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
 		remote.user = userName
 		remote.identityFile = identity
-		withEnv(){
+		withEnv(["DIR=${env.WORKSPACE}"]){
 			stage('Build docker image') {
 				sshCommand remote: remote, command: 'rm -rf mvcjava && mkdir mvcjava'
 				sshPut remote: remote, from: '.', into: 'mvcjava'
