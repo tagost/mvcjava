@@ -39,14 +39,14 @@ node {
 			stage('Build docker image') {
 				sshCommand remote: remote, command: 'rm -rf mvcjava && mkdir mvcjava'
 				sshPut remote: remote, from: '.', into: 'mvcjava'
-				sshCommand remote: remote, command: "cd mvcjava/${env.JOB_NAME} && docker build -t tagost/mvcjava ."
+				sshCommand remote: remote, command: "cd mvcjava/\"${env.JOB_NAME}\" && docker build -t tagost/mvcjava ."
 			}
 			/*stage ('Docker push'){
 				sshCommand remote: remote, command: 'docker push tagost/mvcjava'
 			}*/
 			stage ('Deploy aplication'){
 				sshCommand remote: remote, command: 'docker rm -fv mvcjava'
-				sshCommand remote: remote, command: "cd mvcjava/${env.JOB_NAME} && docker-compose up -d"
+				sshCommand remote: remote, command: "cd mvcjava/\"${env.JOB_NAME}\" && docker-compose up -d"
 			}
 		}		
 	}
