@@ -37,7 +37,7 @@ node {
 		remote.identityFile = identity
 		withEnv(["DIR=${WORKSPACE}"]){
 			stage('Build docker image') {
-				sshCommand remote: remote, command: 'rm -f mvcjava && mkdir mvcjava'
+				sshCommand remote: remote, command: 'rm -rf mvcjava && mkdir mvcjava'
 				sshPut remote: remote, from: '.', into: 'mvcjava', override: true
 				echo '$DIR'
 				sshCommand remote: remote, command: 'cd mvcjava/${env.DIR} && docker build -t tagost/mvcjava .'
