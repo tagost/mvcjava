@@ -41,6 +41,7 @@ node {
 				sshPut remote: remote, from: '.', into: 'mvcjava'
 				echo "$DIR"
 				echo "${env.WORKSPACE}"
+				echo "${env.JOB_NAME}"
 				sshCommand remote: remote, command: 'cd mvcjava/${env.DIR} && docker build -t tagost/mvcjava .'
 			}
 			/*stage ('Docker push'){
