@@ -35,21 +35,18 @@ node {
 	withCredentials([sshUserPrivateKey(credentialsId: 'k3s-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
 		remote.user = userName
 		remote.identityFile = identity
-		withEnv(["DIR=${env.WORKSPACE}"]){
+		withEnv(){
 			stage('Build docker image') {
 				sshCommand remote: remote, command: 'rm -rf mvcjava && mkdir mvcjava'
 				sshPut remote: remote, from: '.', into: 'mvcjava'
-				echo "$DIR"
-				echo "${env.WORKSPACE}"
-				echo "${env.JOB_NAME}"
-				sshCommand remote: remote, command: 'cd mvcjava/${env.DIR} && docker build -t tagost/mvcjava .'
+				sshCommand remote: remote, command: "cd mvcjava/${env.JOB_NAME} && docker build -t tagost/mvcjava ."
 			}
 			/*stage ('Docker push'){
 				sshCommand remote: remote, command: 'docker push tagost/mvcjava'
 			}*/
 			stage ('Deploy aplication'){
 				sshCommand remote: remote, command: 'docker rm -fv mvcjava'
-				sshCommand remote: remote, command: 'cd mvcjava/${env.DIR} && docker-compose up -d'
+				sshCommand remote: remote, command: "cd mvcjava/${env.JOB_NAME} && docker-compose up -d"
 			}
 		}		
 	}
