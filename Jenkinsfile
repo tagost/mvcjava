@@ -36,6 +36,7 @@ node {
 		remote.user = userName
 		remote.identityFile = identity
 		stage('Build docker image') {
+			sshCommand remote: remote, command: 'mkdir -p mvcjava'
 			sshPut remote: remote, from: '.', into: 'mvcjava', override: true
 			sshCommand remote: remote, command: 'cd mvcjava && docker build -t tagost/mvcjava .'
 		}
