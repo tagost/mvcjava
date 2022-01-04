@@ -37,16 +37,17 @@ node {
 		remote.identityFile = identity
 		withEnv(["DIR=${WORKSPACE}"]){
 			stage('Build docker image') {
-				sshCommand remote: remote, command: 'mkdir -p mvcjava'
+				sshCommand remote: remote, command: 'rm -f mvcjava && mkdir mvcjava'
 				sshPut remote: remote, from: '.', into: 'mvcjava', override: true
-				sshCommand remote: remote, command: 'cd mvcjava/${env.WORKSPACE} && docker build -t tagost/mvcjava .'
+				echo '$DIR'
+				sshCommand remote: remote, command: 'cd mvcjava/${env.DIR} && docker build -t tagost/mvcjava .'
 			}
 			/*stage ('Docker push'){
 				sshCommand remote: remote, command: 'docker push tagost/mvcjava'
 			}*/
 			stage ('Deploy aplication'){
 				sshCommand remote: remote, command: 'docker rm -fv mvcjava'
-				sshCommand remote: remote, command: 'cd mvcjava/${env.WORKSPACE} && docker-compose up -d'
+				sshCommand remote: remote, command: 'cd mvcjava/${env.DIR} && docker-compose up -d'
 			}
 		}		
 	}
